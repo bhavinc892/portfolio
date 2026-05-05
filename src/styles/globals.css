@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+/* ─── Design Tokens ─────────────────────────────────────────────── */
+:root {
+  --font-inter: "Inter", sans-serif;
+
+  --bg:            #FAFAFA;
+  --bg-surface:    #FFFFFF;
+  --bg-subtle:     #F4F4F5;
+  --border:        #E4E4E7;
+  --border-strong: #A1A1AA;
+  --text-primary:  #09090B;
+  --text-muted:    #71717A;
+  --text-faint:    #A1A1AA;
+  --accent:        #18181B;
+  --dot-color:     #D4D4D8;
+}
+
+html.dark {
+  --bg:            #09090B;
+  --bg-surface:    #111113;
+  --bg-subtle:     #18181B;
+  --border:        #27272A;
+  --border-strong: #52525B;
+  --text-primary:  #FAFAFA;
+  --text-muted:    #A1A1AA;
+  --text-faint:    #52525B;
+  --accent:        #FAFAFA;
+  --dot-color:     #27272A;
+}
+
+/* ─── Global Reset ───────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-inter);
+  background-color: var(--bg);
+  background-image: radial-gradient(circle, var(--dot-color) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Typography ─────────────────────────────────────────────────── */
+h1, h2, h3, h4 {
+  line-height: 1.1;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+/* ─── Shared Utilities ───────────────────────────────────────────── */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* ─── Section Base (shared across all section components) ─────────── */
+.section {
+  padding: 72px 0;
+  border-top: 1px solid var(--border);
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  margin-bottom: 48px;
+}
+
+.section-number {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  min-width: 32px;
+}
+
+.section-title {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}

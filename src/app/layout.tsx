@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "@/styles/globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -9,9 +9,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Bhavin Chauhan — Frontend Engineer",
+  title: "Bhavin Chauhan - Software Developer",
   description:
-    "Frontend Engineer specializing in Performance, Payments & Scalable Systems. Building high-performance web apps at real-world scale.",
+    "Software Developer specializing in Performance, Payments & Scalable Systems. Building high-performance web apps at real-world scale.",
 };
 
 export default function RootLayout({

@@ -1,0 +1,49 @@
+.aboutGrid {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 48px;
+}
+
+.aboutMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.metaValue {
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.aboutBio {
+  max-width: 600px;
+}
+
+.bioText {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.bioText:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .aboutGrid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .aboutMeta {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .aboutBio {
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,256 @@
+/* ─── Navbar shell ───────────────────────────────────────────────── */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--bg);
+  background-image: radial-gradient(circle, var(--dot-color) 1px, transparent 1px);
+  background-size: 24px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.navbarInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+
+.navbarLogo {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+/* ─── Right group (links + toggle sit flush together) ───────────── */
+.navbarRight {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* ─── Desktop links ──────────────────────────────────────────────── */
+.navbarLinks {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
+
+.navbarLinks a {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.navbarLinks a:hover {
+  color: var(--text-primary);
+}
+
+/* ─── Theme toggle ───────────────────────────────────────────────── */
+.themeToggle {
+  display: flex !important;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.themeToggle:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+}
+
+.themeToggle:active {
+  transform: translateY(0);
+}
+
+.themeIcon {
+  display: block !important;
+  position: absolute;
+  width: 16px !important;
+  height: 16px !important;
+  flex-shrink: 0;
+  transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.iconSun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+  color: #F59E0B;
+}
+
+.iconMoon {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.6);
+  color: var(--text-muted);
+}
+
+:global(html.dark) .iconSun {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.6);
+}
+
+:global(html.dark) .iconMoon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+/* ─── Hamburger button ───────────────────────────────────────────── */
+.hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  flex-shrink: 0;
+  transition: border-color 0.2s ease;
+}
+
+.hamburger:hover {
+  border-color: var(--border-strong);
+}
+
+.hamburgerOpen {
+  border-color: var(--border-strong);
+}
+
+.hamburgerIcon {
+  width: 18px;
+  height: 18px;
+  color: var(--text-primary);
+  overflow: visible;
+}
+
+
+/* ─── Mobile drawer ──────────────────────────────────────────────── */
+.mobileMenu {
+  position: fixed;
+  top: 56px;   /* navbar height */
+  left: 0;
+  right: 0;
+  z-index: 99;
+  background-color: var(--bg);
+  background-image: radial-gradient(circle, var(--dot-color) 1px, transparent 1px);
+  background-size: 24px 24px;
+  border-bottom: 1px solid var(--border);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  /* Animation */
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.mobileMenuOpen {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.mobileLinks {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileLinks li {
+  border-bottom: 1px solid var(--border);
+}
+
+.mobileLinks a {
+  display: block;
+  padding: 16px 0;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.mobileLinks a:hover {
+  color: var(--text-primary);
+}
+
+/* Theme row inside mobile menu */
+.mobileThemeRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 20px;
+}
+
+.mobileThemeLabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* ─── Backdrop ───────────────────────────────────────────────────── */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  top: 56px;
+  z-index: 98;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(2px);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Hide desktop elements */
+  .navbarLinks  { display: none; }
+  .desktopOnly  { display: none !important; }
+
+  /* Show hamburger */
+  .hamburger    { display: flex; }
+
+  /* Mobile menu is display:flex but visibility controlled by opacity/pointer-events */
+  .mobileMenu   { display: flex; }
+}
+
+@media (min-width: 769px) {
+  /* Ensure mobile menu never shows on desktop */
+  .mobileMenu   { display: none !important; }
+  .backdrop     { display: none !important; }
+}
