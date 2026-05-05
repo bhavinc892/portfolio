@@ -17,11 +17,11 @@
 }
 
 .aboutBio {
-  max-width: 600px;
+  /* Removed max-width to utilise remaining space */
 }
 
 .bioText {
-  font-size: 15px;
+  font-size: 17px;
   color: var(--text-muted);
   line-height: 1.8;
   margin-bottom: 20px;

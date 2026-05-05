@@ -1,9 +1,10 @@
 .footer {
-  border-top: 1px solid var(--border);
   padding: 24px 0;
 }
 
 .footerInner {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;

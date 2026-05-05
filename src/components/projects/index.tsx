@@ -1,12 +1,15 @@
+import Link from "next/link";
 import styles from "./styles.module.css";
 
-const PROJECTS = [
-  {
-    category: "Performance",
-    title: "Web Vitals Dashboard",
-    desc: "Real-time Core Web Vitals monitoring dashboard built with Next.js and AWS. Tracks LCP, FID, and CLS across pages with alerting.",
-    stack: ["Next.js", "AWS", "TypeScript"],
-  },
+type Project = {
+  category: string;
+  title: string;
+  desc: string;
+  stack: string[];
+  link?: string;
+};
+
+const PROJECTS: Project[] = [
   {
     category: "Payments",
     title: "Payment Gateway SDK",
@@ -20,10 +23,11 @@ const PROJECTS = [
     stack: ["React", "Redux", "WebSockets"],
   },
   {
-    category: "Tooling",
-    title: "CSP Audit Tool",
-    desc: "Developer tool that scans SPAs for Content Security Policy violations and generates a strict, compliant CSP header.",
-    stack: ["Node.js", "TypeScript", "CLI"],
+    category: "Components",
+    title: "Autocomplete Search",
+    desc: "Autocomplete search component with debounce, memoization, and keyboard navigation.",
+    stack: ["React", "TypeScript"],
+    link: "https://fb.com",
   },
 ];
 
@@ -32,23 +36,56 @@ export default function Projects() {
     <section id="projects" className="section">
       <div className="container">
         <div className="section-header">
-          <span className="section-number">04</span>
-          <h2 className="section-title">Projects</h2>
+          <div className="section-label-wrapper">
+            <div className="section-line"></div>
+            <span className="section-label">Portfolio</span>
+          </div>
+          <h2 className="section-title">
+            Featured <span>Works</span>
+          </h2>
         </div>
         <div className={styles.projectsGrid}>
-          {PROJECTS.map((project) => (
-            <div key={project.title} className={styles.projectCard}>
-              <p className={styles.projectCategory}>{project.category}</p>
-              <h3 className={styles.projectTitle}>{project.title}</h3>
-              <p className={styles.projectDesc}>{project.desc}</p>
-              <div className={styles.projectStack}>
-                {project.stack.map((tech) => (
-                  <span key={tech} className={styles.projectTech}>{tech}</span>
-                ))}
+          {PROJECTS.map((project) => {
+            const cardContent = (
+              <>
+                <p className={styles.projectCategory}>{project.category}</p>
+                <h3 className={styles.projectTitle}>{project.title}</h3>
+                <p className={styles.projectDesc}>{project.desc}</p>
+                <div className={styles.projectStack}>
+                  {project.stack.map((tech) => (
+                    <span key={tech} className={styles.projectTech}>
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                {project.link ? (
+                  <span
+                    className={`${styles.projectArrow} ${styles.projectLiveLabel}`}
+                  >
+                    Live Demo ↗
+                  </span>
+                ) : (
+                  <span className={styles.projectArrow}>↗</span>
+                )}
+              </>
+            );
+
+            return project.link ? (
+              <Link
+                key={project.title}
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${styles.projectCard} ${styles.projectCardLinked}`}
+              >
+                {cardContent}
+              </Link>
+            ) : (
+              <div key={project.title} className={styles.projectCard}>
+                {cardContent}
               </div>
-              <span className={styles.projectArrow}>↗</span>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

@@ -1,16 +1,17 @@
 .contactInner {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: start;
+  gap: 64px;
+  align-items: center;
 }
 
 .contactHeading {
-  font-size: clamp(22px, 3vw, 30px);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
   color: var(--text-primary);
+  margin-bottom: 32px;
 }
 
 .contactDetail {
@@ -19,47 +20,111 @@
   margin-bottom: 8px;
 }
 
-.contactEmail {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text-primary);
+.contactEmailLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
   text-decoration: none;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 2px;
-  transition: border-color 0.15s ease;
+  transition: all 0.2s ease;
 }
 
-.contactEmail:hover {
+.contactEmailText {
+  font-size: clamp(16px, 2vw, 24px);
+  font-weight: 800;
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 4px;
+  transition: border-color 0.2s ease;
+}
+
+.emailIconCircle {
+  width: 48px;
+  height: 48px;
+  background: var(--text-primary);
+  color: var(--bg);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.contactEmailLink:hover .contactEmailText {
   border-color: var(--text-primary);
 }
 
-.socialLinks {
+.contactEmailLink:hover .emailIconCircle {
+  transform: scale(1.1) rotate(45deg);
+}
+
+.socialContainer {
   display: flex;
-  gap: 16px;
-  margin-top: 28px;
+  justify-content: flex-end;
 }
 
-.socialLink {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  text-decoration: none;
-  padding: 8px 16px;
+.socialRow {
+  display: flex;
+  gap: 12px;
+}
+
+.socialItem {
+  display: flex;
+  align-items: center;
+  gap: 0; /* No gap initially as name is hidden */
+  padding: 12px;
+  background: var(--bg-surface);
   border: 1px solid var(--border);
-  border-radius: 4px;
-  transition: all 0.15s ease;
+  border-radius: 50px;
+  color: #94A3B8;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  overflow: hidden;
+  max-width: 48px; /* Width of the icon button */
 }
 
-.socialLink:hover {
+.iconWrapper {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.socialName {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   color: var(--text-primary);
-  border-color: var(--border-strong);
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.socialItem:hover {
+  max-width: 200px; /* Allow space for text */
+  gap: 12px;
+  padding-right: 24px;
+  color: var(--text-primary);
+  border-color: var(--text-primary);
+  background: var(--bg-subtle);
+}
+
+.socialItem:hover .socialName {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 @media (max-width: 768px) {
   .contactInner {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 48px;
+  }
+  
+  .socialContainer {
+    justify-content: flex-start;
   }
 }

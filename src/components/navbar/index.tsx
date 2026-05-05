@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import styles from "./styles.module.css";
 
 /* ─── Icons ──────────────────────────────────────────────────────── */
@@ -55,9 +56,9 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setIsDark(prefersDark);
-    document.documentElement.classList.toggle("dark", prefersDark);
+    // Sync React state with the class already on documentElement (applied by the inline script)
+    const isDarkTheme = document.documentElement.classList.contains("dark");
+    setIsDark(isDarkTheme);
   }, []);
 
   /* Close mobile menu on desktop resize */
@@ -76,7 +77,13 @@ export default function Navbar() {
   const toggleTheme = () => {
     const next = !isDark;
     setIsDark(next);
-    document.documentElement.classList.toggle("dark", next);
+    if (next) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
   };
 
   const closeMenu = () => setIsOpen(false);
@@ -85,7 +92,7 @@ export default function Navbar() {
     <>
       <nav className={styles.navbar}>
         <div className={`container ${styles.navbarInner}`}>
-          <a href="/" className={styles.navbarLogo}>Bhavin Chauhan</a>
+          <Link href="/" className={styles.navbarLogo}>Bhavin Chauhan</Link>
 
           <div className={styles.navbarRight}>
             <ul className={styles.navbarLinks}>

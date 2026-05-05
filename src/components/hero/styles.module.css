@@ -17,6 +17,10 @@
   color: var(--text-primary);
 }
 
+.heroName span {
+  color: #94A3B8;
+}
+
 .heroRole {
   margin-top: 20px;
   display: flex;

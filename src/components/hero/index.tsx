@@ -6,7 +6,7 @@ export default function Hero() {
       <div className="container">
         <div className={styles.heroGrid}>
           <div>
-            <h1 className={styles.heroName}>BHAVIN<br />CHAUHAN</h1>
+            <h1 className={styles.heroName}>BHAVIN<br /><span>CHAUHAN</span></h1>
             <div className={styles.heroRole}>
               <span className={styles.heroRoleText}>
                 Software Developer specializing in<br />
