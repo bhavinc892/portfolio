@@ -1,79 +1,295 @@
 .hero {
-  padding: 96px 0 80px;
+  padding: 80px 0 100px;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
 }
 
-.heroGrid {
+/* ─── Repelling Rain Canvas ─── */
+.rainCanvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Custom I-Beam Cursor ─── */
+.customIBeam {
+  position: fixed;
+  width: 2px;
+  height: 28px; /* Reduced size */
+  background: #ffffff;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.customIBeam::before, .customIBeam::after {
+  content: '';
+  position: absolute;
+  left: -4px;
+  width: 10px;
+  height: 2px;
+  background: #ffffff;
+}
+
+.customIBeam::before { top: 0; }
+.customIBeam::after { bottom: 0; }
+
+.visible {
+  opacity: 1;
+}
+
+/* ─── VS Code Window ─── */
+.editorWindow {
+  position: relative;
+  z-index: 10; /* Ensure editor is above the rain */
+  background: #1e1e1e;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 48px;
+  animation: windowReveal 1s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: none; /* Hide real cursor only over editor */
+}
+
+@keyframes windowReveal {
+  from { opacity: 0; transform: translateY(40px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ─── Title Bar ─── */
+.titleBar {
+  background: #323233;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+}
+
+.titleBar::after {
+  content: '';
+  width: 52px; /* Matches trafficLights width + gap to keep title centered */
+}
+
+.trafficLights {
+  display: flex;
+  gap: 8px;
+  width: 52px;
+}
+
+.dotRed, .dotYellow, .dotGreen {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.dotRed { background: #ff5f56; }
+.dotYellow { background: #ffbd2e; }
+.dotGreen { background: #27c93f; }
+
+.titleText {
+  flex: 1;
+  text-align: center;
+  font-size: 12px;
+  color: #cccccc;
+  font-family: var(--font-inter), sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%; /* Allow flexbox to handle width */
+}
+
+/* ─── Body ─── */
+.editorBody {
+  display: flex;
+  height: 480px; /* Adjusted to remove scrollbar */
+}
+
+/* ─── Sidebar ─── */
+.sidebar {
+  width: 64px; /* Increased width */
+  background: #333333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  gap: 28px;
+}
+
+.sidebarIcon {
+  font-size: 24px; /* Increased size */
+  color: #858585;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+}
+
+.sidebarIcon:hover {
+  color: #ffffff;
+}
+
+.activeBorder {
+  position: absolute;
+  left: -20px;
+  width: 3px;
+  height: 100%;
+  background: #ffffff;
+}
+
+/* ─── Editor Main ─── */
+.editorMain {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #1e1e1e;
+}
+
+.tabs {
+  background: #252526;
+  display: flex;
+}
+
+.tabActive {
+  background: #1e1e1e;
+  color: #ffffff;
+  padding: 12px 28px; /* Increased padding */
+  font-size: 14px; /* Increased font size */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid #007acc;
+}
+
+.tabIcon {
+  color: #519aba;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+/* ─── Code Content ─── */
+.codeContent {
+  flex: 1;
+  display: flex;
+  padding: 32px 0; /* Increased padding */
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: clamp(16px, 2.2vw, 22px); /* Scaled up text */
+  line-height: 1.7;
+  overflow-y: auto;
+}
+
+.lineNumbers {
+  width: 80px; /* Increased width */
+  color: #858585;
+  text-align: right;
+  padding-right: 28px;
+  user-select: none;
+}
+
+.codeLines {
+  flex: 1;
+}
+
+.codeLine {
+  white-space: pre;
+}
+
+.indent1 { padding-left: 40px; } /* Increased indentation */
+
+/* ─── Syntax Highlighting ─── */
+.keyword { color: #569cd6; }
+.variable { color: #9cdcfe; }
+.string { color: #ce9178; }
+.property { color: #9cdcfe; }
+.function { color: #dcdcaa; }
+.plain { color: #d4d4d4; }
+
+.nameHighlight {
+  display: inline-block;
+  background: rgba(0, 122, 204, 0.4);
+  padding: 0 8px;
+  border-radius: 4px;
+  animation: blinkHighlight 1.5s step-end infinite;
+}
+
+@keyframes blinkHighlight {
+  from, to { background: rgba(0, 122, 204, 0.4); color: #ffffff; }
+  50% { background: transparent; color: #ce9178; }
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background-color: #569cd6;
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ─── Status Bar ─── */
+.statusBar {
+  background: #007acc;
+  color: #ffffff;
+  padding: 6px 16px; /* Increased padding */
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px; /* Increased font size */
+}
+
+.statusSection {
+  display: flex;
+  gap: 20px;
+}
+
+/* ─── Hero Footer ─── */
+.heroFooter {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: end;
-}
-
-.heroName {
-  font-size: clamp(52px, 7vw, 88px);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  color: var(--text-primary);
-}
-
-.heroName span {
-  color: #94A3B8;
-}
-
-.heroRole {
-  margin-top: 20px;
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.heroRoleText {
-  font-size: 14px;
-  color: var(--text-muted);
-  font-weight: 400;
-  line-height: 1.6;
+  gap: 64px;
+  align-items: start;
 }
 
 .heroBio {
-  font-size: 15px;
+  font-size: 18px;
   color: var(--text-muted);
-  line-height: 1.7;
-  margin-bottom: 32px;
+  line-height: 1.8;
 }
 
 .heroActions {
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: flex-end;
 }
 
 /* ─── Buttons ─── */
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.15s ease;
-  border: none;
-  outline: none;
+  transition: all 0.2s ease;
 }
 
 .btnPrimary {
   background: var(--text-primary);
   color: var(--bg);
-}
-
-.btnPrimary:hover {
-  opacity: 0.85;
-  transform: translateY(-1px);
 }
 
 .btnOutline {
@@ -82,14 +298,132 @@
   border: 1px solid var(--border-strong);
 }
 
-.btnOutline:hover {
-  border-color: var(--text-primary);
-  transform: translateY(-1px);
+@media (max-width: 768px) {
+  .hero {
+    padding: 40px 0 60px;
+  }
+
+  .editorWindow {
+    margin-bottom: 32px;
+  }
+  
+  .editorBody {
+    height: 340px;
+  }
+  
+  .sidebar {
+    display: none;
+  }
+
+  .codeContent {
+    font-size: 14px;
+    padding: 20px 0;
+  }
+
+  .lineNumbers {
+    width: 45px;
+    padding-right: 12px;
+  }
+
+  .indent1 {
+    padding-left: 20px;
+  }
+
+  .tabActive {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+
+  .statusSection:last-child {
+    display: none;
+  }
+  
+  .heroFooter {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    text-align: center;
+  }
+
+  .heroBio {
+    font-size: 16px;
+  }
+  
+  .heroActions {
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  .titleText {
+    font-size: 11px;
+  }
+
+  .titleBar::after,
+  .trafficLights {
+    width: 45px;
+  }
+
+  .customIBeam {
+    display: none; /* Disable custom cursor on touch devices */
+  }
 }
 
-@media (max-width: 768px) {
-  .heroGrid {
-    grid-template-columns: 1fr;
-    gap: 32px;
+@media (max-width: 400px) {
+  .hero {
+    padding: 30px 0 40px;
+  }
+
+  .editorBody {
+    height: 300px;
+  }
+
+  .codeContent {
+    font-size: 11px; /* Even smaller for 320px */
+    padding: 15px 0;
+  }
+
+  .lineNumbers {
+    width: 35px;
+    padding-right: 8px;
+  }
+
+  .indent1 {
+    padding-left: 12px;
+  }
+
+  .tabActive {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+
+  .statusBar {
+    font-size: 10px;
+    padding: 4px 10px;
+  }
+
+  .heroBio {
+    font-size: 14px;
+  }
+
+  .titleText {
+    font-size: 10px;
+  }
+
+  .titleBar::after,
+  .trafficLights {
+    width: 40px;
+    gap: 4px;
+  }
+
+  .dotRed, .dotYellow, .dotGreen {
+    width: 8px;
+    height: 8px;
   }
 }
