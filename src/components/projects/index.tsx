@@ -15,19 +15,21 @@ const PROJECTS: Project[] = [
     title: "Payment Gateway SDK",
     desc: "Unified payment SDK abstracting Stripe and Razorpay with built-in 3DS flow, webhook handling, and retry logic.",
     stack: ["React", "Node.js", "Stripe", "Razorpay"],
+    link: "https://sg.bookmyshow.com",
   },
   {
     category: "Frontend",
     title: "Ticket Booking Engine",
     desc: "High-throughput seat selection UI for live events. Handles concurrent sessions, real-time seat locking, and dynamic pricing.",
     stack: ["React", "Redux", "WebSockets"],
+    link: "https://sg.bookmyshow.com",
   },
   {
     category: "Components",
     title: "Autocomplete Search",
     desc: "Autocomplete search component with debounce, memoization, and keyboard navigation.",
     stack: ["React", "TypeScript"],
-    link: "https://fb.com",
+    link: "https://typeahead-search-component.vercel.app",
   },
 ];
 
